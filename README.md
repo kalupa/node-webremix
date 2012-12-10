@@ -46,7 +46,6 @@ If you want to pass in a different width and height for Youtube/Vimeo/Rdio, pass
 * Vimeo urls
 * Soundcloud urls (will fall back to a regular link if the author has sharing disabled)
 * Rdio urls
-* Mixcloud urls
 
 ## Testing
 
