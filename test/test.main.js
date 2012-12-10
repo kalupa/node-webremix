@@ -77,36 +77,40 @@ describe('webremix', function() {
       });
     });
 
-    it('returns a regular link', function() {
+    it('returns a regular link', function(done) {
       var link = 'http://poop.com';
       var scope = nock('poop.com').get('http://poop.com').reply(200,
           { html: '<a href="http://poop.com">http://poop.com</a>' });
       webRemix.generate(link, function(err, subject) {
         subject.should.equal('<a href="http://poop.com">http://poop.com</a>');
+        done();
       });
     });
 
-    it('returns image code for an instagr.am url', function() {
+    it('returns image code for an instagr.am url', function(done) {
       var instagram = 'http://instagram.com/p/QFJJzTw8yS/';
       webRemix.generate(instagram, function(err, subject) {
         subject.should.equal('<div class="image-wrapper"><a href="http://instagram.com/p/QFJJzTw8yS/">' +
           '<img src="http://instagr.am/p/QFJJzTw8yS/media/"/></a></div>');
+        done();
       });
     });
 
-    it('returns a mix of text and links', function() {
+    it('returns a mix of text and links', function(done) {
       var mix = 'http://instagram.com/p/QFJJzTw8yS/ bunnies';
       webRemix.generate(mix, function(err, subject) {
         subject.should.equal('<div class="image-wrapper"><a href="http://instagram.com/p/QFJJzTw8yS/">' +
           '<img src="http://instagr.am/p/QFJJzTw8yS/media/"/></a></div> bunnies');
+        done();
       });
     });
 
-    it('returns escaped text and links', function() {
+    it('returns escaped text and links', function(done) {
       var mix = '<script>alert("omg");</script> http://instagram.com/p/QFJJzTw8yS/ bunnies';
       webRemix.generate(mix, function(err, subject) {
         subject.should.equal('&lt;script&gt;alert("omg");&lt;/script&gt; <div class="image-wrapper"><a href="http://instagram.com/p/QFJJzTw8yS/">' +
           '<img src="http://instagr.am/p/QFJJzTw8yS/media/"/></a></div> bunnies');
+        done();
       });
     });
   });
