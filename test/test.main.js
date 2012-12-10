@@ -50,6 +50,25 @@ describe('webremix', function() {
       });
     });
 
+    it('returns embed code for a bandcamp url', function() {
+      var bandcamp = 'http://rossocorsarecords.bandcamp.com/track/lazerhawk-underworld-legend-of-zelda-remix';
+      var scope = nock('api.bandcamp.com').
+        get('/api/url/11/info?key=foo&url=http://rossorecords.bandcamp.com/track').
+        reply(
+          200,
+          { html: "SOMETHING" }
+        );
+      webRemix.generate(bandcamp, function(err, subject){
+        subject.should.equal('<div class="object-wrapper"><iframe width="100%" height="100" '+
+          'src="http://bandcamp.com/EmbeddedPlayer/v=2/track=3063546832/size=venti/bgcol=FFFFFF/linkcol=4285BB/" '+
+          'allowtransparency="true" frameborder="0">'+
+          '<a href="http://rossocorsarecords.bandcamp.com/track/lazerhawk-underworld-legend-of-zelda-remix">Lazerhawk '+
+          '- Underworld (Legend of Zelda Remix) by Rosso Corsa Records</a></iframe>');
+        done();
+      });
+    });
+
+
     it('returns embed code for a rd.io short url', function(done) {
       var rdio = 'http://rd.io/i/QVME9DdeW1GL';
       webRemix.generate(rdio, function(err, subject) {
