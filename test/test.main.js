@@ -50,13 +50,13 @@ describe('webremix', function() {
       });
     });
 
-    it('returns embed code for a bandcamp url', function() {
+    it('returns embed code for a bandcamp url', function(done) {
       var bandcamp = 'http://rossocorsarecords.bandcamp.com/track/lazerhawk-underworld-legend-of-zelda-remix';
       var scope = nock('api.bandcamp.com').
         get('/api/url/11/info?key=foo&url=http://rossorecords.bandcamp.com/track').
         reply(
           200,
-          { html: "SOMETHING" }
+          { track_id: '3063546832' }
         );
       webRemix.generate(bandcamp, function(err, subject){
         subject.should.equal('<div class="object-wrapper"><iframe width="100%" height="100" '+
